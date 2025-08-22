@@ -55,11 +55,6 @@ public class LibrosService {
         libroExistente.setGenero(librosDTO.getGenero());
         libroExistente.setAutor_id(librosDTO.getAutor_id());
 
-        if (librosDTO.getAutor_id() != null){
-            LibrosEntity libro = repo.findById(librosDTO.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Libro no encontrado con id propornionado"));
-        }
-
         LibrosEntity libroActualizado = repo.save(libroExistente);
 
         return ConvertirADTO(libroActualizado);

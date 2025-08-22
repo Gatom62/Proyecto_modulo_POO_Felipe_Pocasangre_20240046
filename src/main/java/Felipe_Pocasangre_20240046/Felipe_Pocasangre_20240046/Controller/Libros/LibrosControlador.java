@@ -1,6 +1,7 @@
 package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Controller.Libros;
 
 import Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Exception.Libros.ExceptionNotFound;
+import Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Exception.Libros.ExecptioColumnDuplicate;
 import Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Model.DTO.Libros.LibrosDTO;
 import Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Service.Libros.LibrosService;
 import jakarta.validation.Valid;
@@ -93,6 +94,12 @@ public class LibrosControlador {
         }
         catch (ExceptionNotFound e){
             return ResponseEntity.notFound().build();
+        }
+        catch (ExecptioColumnDuplicate e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
+                    "error", "Datos duplicados",
+                    "campo", e.getMessage()
+            ));
         }
     }
 
