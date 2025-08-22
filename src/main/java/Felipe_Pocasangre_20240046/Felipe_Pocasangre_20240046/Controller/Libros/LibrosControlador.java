@@ -22,18 +22,30 @@ import java.util.Objects;
 @CrossOrigin
 public class LibrosControlador {
 
+    //Con esto podremos utilizar todos los metodos del service, y con heyo vamos a poder mandar los datos que nos mande el usuario y resivir contestaciónes
     @Autowired
     private LibrosService service;
 
-    //Optener todos los registros
+    /*
+     *
+     * Enpoint para: Optener todos los datos de libros
+     *
+     * */
+
     @GetMapping("/getDataLibros")
     public ResponseEntity<?> getDataLibros(){
         try{
             List<LibrosDTO> libros = service.getAllLibros();
+
+            //Primero hacemos una validacion que nos ayuda a saber si hay datos registrados
             if (libros.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("status", "No hay libros registrados"));
             }
+
+            //Si pasa bien la validacion, entonces mostramos los datos y le mandamos un 200
             return ResponseEntity.ok(libros);
+
+            //Pero si llega a ocurrir algun error que no tengamos controlado, entonces se ejecutara este otro error
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
                 "error", "Error al optener al libros",
@@ -42,20 +54,37 @@ public class LibrosControlador {
         }
     }
 
+    /*
+     *
+     * Enpoint para: Buscar libros por su id
+     *
+     * */
+
     //Optener autores por su id
     @GetMapping("/getDataLibros/{id}")
+    //@PathVariable nos sirbe para optener y guardar el id que el usuario nos proporcione
     public ResponseEntity<LibrosDTO> getLibrosPorId(@PathVariable Long id){
+
+        //Aqui de un solo actualizamos los datos, ya que le mandamos al usuario el id del registro mas el dto
         try {
             LibrosDTO libro = service.getLibrosPorId(id);
             return ResponseEntity.ok(libro);
+            //Y le madamos como se ve la actualizacion que paso
         }catch (Exception e){
             return ResponseEntity.notFound().build();
         }
     }
 
+    /*
+     *
+     * Enpoint para: Crear
+     *
+     * */
+
     @PostMapping("/newLibro")
     public ResponseEntity<Map<String, Object>> InsertLibro(@Valid @RequestBody LibrosDTO json){
         try{
+            //Aqui le madamos de un solo los datos al service, y dependiendo si se logro o no ejecutaremos lo siguente
             LibrosDTO response = service.insert(json);
             if (response == null){
                 return ResponseEntity.badRequest().body(Map.of(
@@ -64,10 +93,13 @@ public class LibrosControlador {
                         "Descripcion", "Verifica si los valores"
                 ));
             }
+            //Si el servicio nos dice que si se logro hacer la insercion, entonces con los mismos datos que nos proporciono el usuario, se los mostramos al usuario, indicando que la insercion fue exitosa
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                     "estado", "Completado",
                     "data", response
             ));
+
+            //Si llega a ocurrir algun error no controlado, entonces mandaremos este error
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
                     "status", "error",
@@ -76,6 +108,12 @@ public class LibrosControlador {
             ));
         }
     }
+
+    /*
+    *
+    * Enpoint para: Actualizar
+    *
+    * */
 
     @PutMapping("/updateLibro/{id}")
     public ResponseEntity<?> modificarLibro(
@@ -102,6 +140,12 @@ public class LibrosControlador {
             ));
         }
     }
+
+    /*
+     *
+     * Enpoint para: Eliminar
+     *
+     * */
 
     @DeleteMapping("/deleteLibro/{id}")
     public ResponseEntity<Map<String, Object>> eliminarLibro(@PathVariable Long id){
