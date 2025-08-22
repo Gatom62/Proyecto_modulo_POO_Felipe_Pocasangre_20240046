@@ -90,20 +90,18 @@ public class LibrosControlador {
         try {
             LibrosDTO libroActualizado = service.update(id, librosDTO);
             return ResponseEntity.ok(libroActualizado);
-        }catch (ExceptionNotFound e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    Map.of("error", "Datos duplicados",
-                            "campo", e.getMessage())
-            );
+        }
+        catch (ExceptionNotFound e){
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/deleteLibro/{id}")
-    public ResponseEntity<Map<String, Object>> eliminarLibro(@Valid Long id){
+    public ResponseEntity<Map<String, Object>> eliminarLibro(@PathVariable Long id){
         try {
             if (!service.delete(id)){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).header(
-                        "Message error", "Estudiante no encontrado"
+                        "X-Mensaje-Error", "Estudiante no encontrado"
                 ).body(Map.of(
                    "error", "Not found",
                    "mensaje", "El estudiante no fue encontrado",
