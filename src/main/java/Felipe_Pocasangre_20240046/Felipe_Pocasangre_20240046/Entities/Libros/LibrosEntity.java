@@ -1,4 +1,4 @@
-package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Entities.Autores;
+package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Entities.Libros;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Table(name = "LIBROS")
-public class AutoresEntity {
+public class LibrosEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_libro")

@@ -1,4 +1,4 @@
-package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Exception.Autores;
+package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Exception.Libros;
 
 
 public class ExecptioColumnDuplicate extends RuntimeException {

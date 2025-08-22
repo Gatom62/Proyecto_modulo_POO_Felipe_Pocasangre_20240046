@@ -1,11 +1,12 @@
-package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Model.DTO.Autores;
+package Felipe_Pocasangre_20240046.Felipe_Pocasangre_20240046.Model.DTO.Libros;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AutorDTO {
+public class LibrosDTO {
 
     private Long id;
 
