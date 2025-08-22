@@ -88,7 +88,7 @@ public class LibrosControlador {
             return ResponseEntity.badRequest().body(errores);
         }
         try {
-            LibrosDTO libroActualizado = service.update(id);
+            LibrosDTO libroActualizado = service.update(id, librosDTO);
             return ResponseEntity.ok(libroActualizado);
         }catch (ExceptionNotFound e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(
